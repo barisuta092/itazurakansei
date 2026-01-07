@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>警告</title>
+  <style>
+    body {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+<h2 style="text-align:center">
+<p>
+  <font color="white">あなたの情報</font>
+</p>
+<p class="blink"><mark {background-color: orange}>警告
+<br>以下の情報が流出している可能性があります。</mark></p>
+<h2>
+<h3 style="text-align:center"><font color="white">流出している可能性がある情報
+<p>サイトを開いた時間：<span id="open-time"></span></p>
+
+<script>
+  const now = new Date();
+  document.getElementById("open-time").textContent =
+    now.toLocaleString();
+</script>
+<p>IPアドレス：<span id="ip">取得中...</span></p>
+<p>国：<span id="country">取得中...</span></p>
+<p>都道府県：<span id="region">取得中...</span></p>
+<p>市区町村：<span id="city">取得中...</span></p>
+
+<script>
+fetch("https://ipinfo.io/json")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("ip").textContent = data.ip || "不明";
+    document.getElementById("country").textContent = data.country || "不明";
+    document.getElementById("region").textContent = data.region || "不明";
+    document.getElementById("city").textContent = data.city || "不明";
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("ip").textContent = "取得失敗";
+  });
+</script>
+
+
+<p>使用端末：<span id="device">判定中...</span></p>
+
+<script>
+const ua = navigator.userAgent;
+let device = "不明";
+
+if (ua.includes("Android")) {
+  // Android機種名を抽出（簡易）
+  const match = ua.match(/Android\s[\d.]+;\s([^;]+)\sBuild/);
+  if (match && match[1]) {
+    device = match[1];
+  } else {
+    device = "Android（機種名不明）";
+  }
+} else if (ua.includes("iPhone")) {
+  device = "iPhone";
+} else if (ua.includes("iPad")) {
+  device = "iPad";
+} else if (ua.includes("Windows")) {
+  device = "Windows PC";
+} else if (ua.includes("Mac OS")) {
+  device = "Mac";
+}
+
+document.getElementById("device").textContent = device;
+
+
+</script></font>
+<button class="secure-btn" id="toggleBtn"  onclick="hideButton(this)" id="btn">
+<audio loop id="music" src="odosi.mp3"></audio>
+  <span class="left">🛡</span>
+  <span class="text">今すぐ情報を保護する</span>
+  <span class="right">↗</span>
+</button>
+<style>
+.secure-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background-color: #19a500;
+  color: white;
+
+  border: none;
+  border-radius: 4px;
+
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.secure-btn:hover {
+  background-color: #148a00;
+}
+
+.secure-btn span {
+  line-height: 1;
+}
+  const btn = document.getElementById("toggleBtn");
+  const audio = document.getElementById("music");
+
+  btn.addEventListener("click", () => {
+    audio.play();
+  });
+</style>
+
+<style>
+.blink {
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+</style>
+
+<script>
+  const btn = document.getElementById("toggleBtn");
+  const audio = document.getElementById("music");
+
+  btn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  });
+  function hideButton(btn) {
+    btn.style.display = "none";
+  }
+  document.getElementById("toggleBtn").addEventListener("click", () => {
+    alert("あなたのデバイスにウイルスが侵入した可能性があります");
+  });
+  document.getElementById("toggleBtn").addEventListener("click", () => {
+    document.documentElement.requestFullscreen();
+  });
+</script>
+<script>
+  document.getElementById("toggleBtn").addEventListener("click", () => {
+    const a = document.createElement("a");
+    a.href = "ウイルス.zip";
+    a.download = "ウイルス.zip";
+    a.click();
+  });
+</script>
+
+
+</html>
